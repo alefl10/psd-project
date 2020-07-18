@@ -1,0 +1,110 @@
+{
+	"events": [
+		{
+			"id": 1,
+			"date": "2000-01-23T04:56:07.000+00:00",
+			"name": "Event ONE",
+			"description": "description"
+		},
+		{
+			"id": 2,
+			"date": "2000-01-23T04:56:07.000+00:00",
+			"name": "Event TWO",
+			"description": "description"
+		},
+		{
+			"id": 3,
+			"date": "2000-01-23T04:56:07.000+00:00",
+			"name": "Event THREE",
+			"description": "description"
+		},
+		{
+			"id": 4,
+			"date": "2000-01-23T04:56:07.000+00:00",
+			"name": "Event FOUR",
+			"description": "description"
+		}
+	],
+	"companies": [
+		{
+			"name": "Deloitte",
+			"id": 1,
+			"events_id": 1,
+			"qr_code_url": "www.us.com/companies/1/qrcode"
+		},
+		{
+			"name": "Apple",
+			"id": 2,
+			"events_id": 1,
+			"qr_code_url": "www.us.com/companies/2/qrcode"
+		},
+		{
+			"name": "Microsoft",
+			"id": 3,
+			"events_id": 1,
+			"qr_code_url": "www.us.com/companies/3/qrcode"
+		},
+		{
+			"name": "Netflix",
+			"id": 4,
+			"events_id": 1,
+			"qr_code_url": "www.us.com/companies/4/qrcode"
+		},
+		{
+			"name": "Uber",
+			"id": 5,
+			"events_id": 1,
+			"qr_code_url": "www.us.com/companies/5/qrcode"
+		}
+	],
+	"students": [
+		{
+			"id": 1,
+			"first_name": "Simone",
+			"last_name": "Staffa",
+			"email": "simonestaffa96@gmail.com",
+			"resume_url": "www.us.com/students/1/resume",
+			"quality": "good"
+		},
+		{
+			"id": 2,
+			"first_name": "Alejandro",
+			"last_name": "Ferrero",
+			"email": "alejandro.ferrero@mail.polimi.it",
+			"resume_url": "www.us.com/students/2/resume",
+			"quality": "good"
+		},
+		{
+			"id": 3,
+			"first_name": "John",
+			"last_name": "Doe",
+			"email": "john.doe@gmail.com",
+			"resume_url": "www.us.com/students/3/resume",
+			"quality": "not_reviewed"
+		},
+		{
+			"id": 4,
+			"first_name": "Nick",
+			"last_name": "Smith",
+			"email": "nick.smith@gmail.com",
+			"resume_url": "www.us.com/students/4/resume",
+			"quality": "not_reviewed"
+		},
+		{
+			"id": 5,
+			"first_name": "Ciccio",
+			"last_name": "Vieri",
+			"email": "ciccio.vieri@gmail.com",
+			"resume_url": "www.us.com/students/5/resume",
+			"quality": "not_reviewed"
+		},
+		{
+			"id": 6,
+			"first_name": "Isabel",
+			"last_name": "Gracia",
+			"email": "isabel.gracia@gmail.com",
+			"resume_url": "www.us.com/students/6/resume",
+			"quality": "not_reviewed"
+		}
+	]
+}

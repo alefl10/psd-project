@@ -1,0 +1,358 @@
+---
+swagger: "2.0"
+info:
+  description: "Process and Service Design Project - US (Tentative Name)"
+  version: "1.0.0"
+  title: "PSD Project"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "simone.staffa@mail.polimi.it"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:5000"
+basePath: "/api/v1"
+tags:
+- name: "Admin"
+  description: "Opeartion about admins"
+- name: "Company"
+  description: "Operations about companies"
+- name: "Student"
+  description: "Operations about student"
+schemes:
+- "http"
+paths:
+  /admins/events:
+    post:
+      tags:
+      - "Admin"
+      summary: "Add a new event in the database"
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "event"
+        description: "Event object that needs to be added to the database"
+        required: true
+        schema:
+          type: object
+          required:
+            - event
+          properties:
+            event:
+              $ref: "#/definitions/EventCreateObject"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Event"
+        "422":
+          description: "Invalid input"
+
+  /admins/companies:
+    post:
+      tags:
+      - "Admin"
+      summary: "Register a company to an event"
+      operationId: "addCompany"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "company"
+        description: "Company object that needs to be added to the database"
+        required: true
+        schema:
+          type: object
+          required:
+            - company
+          properties:
+            company:
+              $ref: "#/definitions/Company"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Company"
+        "422":
+          description: "Invalid input"
+
+  /admins/students:
+    get:
+      tags:
+      - "Admin"
+      summary: "Retrieve students"
+      operationId: "retrieveStudents"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "quality"
+        in: "query"
+        description: "Student resume quality"
+        required: false
+        type: "string"
+        enum:
+        - "bad"
+        - "good"
+        - "not_reviewed"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+
+      
+  /admins/students/{student_id}:
+    get:
+      tags:
+      - "Admin"
+      summary: "Retrieve single student"
+      operationId: "retrieveStudent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "student_id"
+        in: "path"
+        description: "Student id to be updated"
+        required: true
+        type: "string"
+        enum:
+        - "bad"
+        - "good"
+        - "not_reviewed"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Student"
+        "404":
+          description: "Not Found"
+    put:
+      tags:
+      - "Admin"
+      summary: "Set resume quality"
+      operationId: "setResumeQuality"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "student_id"
+        in: "path"
+        description: "Student id to be updated"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "quality"
+        description: "Student object that needs to be added to the database"
+        required: true
+        schema:
+          type: object
+          required:
+            - quality
+          properties:
+            quality:
+              type: "string"
+              enum:
+                - "good"
+                - "bad"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Student"
+        "422":
+          description: "Invalid input"
+
+  /companies/students:
+    get:
+      tags:
+      - "Company"
+      summary: "Retrieve students with resumes quality = good"
+      operationId: "adminRetrieveStudents"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+
+  /students/resume:
+    post:
+      tags:
+      - "Student"
+      summary: "Upload resume"
+      operationId: "uploadResume"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "student"
+        description: "Student object that needs to be added to the database"
+        required: true
+        schema:
+          type: object
+          required:
+            - student
+          properties:
+            student:
+              $ref: "#/definitions/StudentCreateObject"
+      responses:
+        "200":
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Student"
+        "422":
+          description: "Invalid input"
+
+definitions:
+  Event:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Digital Career Day - PoliMi"
+      description:
+        type: "string"
+        example: "The newest career day ever"
+      date:
+        type: "string"
+        format: "date-time"
+        example: "Career Day Event dedicated to top-tier tech companies in the digital industry"
+        description: "Event date"
+      companies:
+        type: "array"
+        items:
+          $ref: "#/definitions/Company"
+    example:
+      date: "Career Day Event dedicated to top-tier tech companies in the digital industry"
+      companies:
+      - name: "Deloitte"
+        id: 1
+        events_id: 1
+        qr_code_url: "www.us.com/companies/1/qrcode"
+      - name: "Amazon"
+        id: 2
+        events_id: 1
+        qr_code_url: "www.us.com/companies/2/qrcode"
+      name: "Digital Career Day - PoliMi"
+      description: "The newest career day ever"
+      id: 1
+  EventCreateObject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      date:
+        type: "string"
+        format: "date-time"
+        description: "Event date"
+    example:
+      date: "2000-01-23T04:56:07.000+00:00"
+      name: "name"
+      description: "description"
+      id: 0
+  Company:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      name:
+        type: "string"
+        example: "Deloitte"
+      qr_code_url:
+        type: "string"
+        example: "www.us.com/companies/1/qrcode"
+      events_id:
+        type: "integer"
+        format: "int64"
+        example: 1
+    example:
+      name: "Deloitte"
+      id: 1
+      events_id: 1
+      qr_code_url: "www.us.com/companies/1/qrcode"
+  Student:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      first_name:
+        type: "string"
+        example: "Simone"
+      last_name:
+        type: "string"
+        example: "Staffa"
+      email:
+        type: "string"
+        example: "simonestaffa96@gmail.com"
+      resume_url:
+        type: "string"
+        example: "www.us.com/students/1/resume"
+      quality:
+        type: "string"
+        enum:
+        - "good"
+        - "not_reviewed"
+        - "bad"
+    example:
+      last_name: "Staffa"
+      id: 1
+      first_name: "Simone"
+      resume_url: "www.us.com/students/1/resume"
+      email: "simonestaffa96@gmail.com"
+      quality: "good"
+  StudentCreateObject:
+    type: "object"
+    required:
+      - first_name
+      - last_name
+      - email
+      - resume
+    
+    properties:
+      first_name:
+        type: "string"
+        example: "Somebody"
+      last_name:
+        type: "string"
+        example: "New"
+      email:
+        type: "string"
+        example: "somebody.new@gmail.com"
+      resume:
+        type: "string"
+        format: "binary"
+        example: "MyResume.pdf"
