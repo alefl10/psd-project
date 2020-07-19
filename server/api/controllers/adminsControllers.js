@@ -2,6 +2,8 @@ import { events, companies, students } from '../models/data.json';
 
 const qualityValues = ['good', 'bad'];
 
+const generateQRCode = companyID => `www.us.com/companies/${companyID}/qrcode`;
+
 export const postEvent = (req, res) => {
 	const { event } = req.body;
 	if (!event) {
@@ -19,6 +21,9 @@ export const postCompany = (req, res) => {
 		res.status(422).send();
 		return;
 	}
+	const lastIndex = companies[companies.length - 1].id;
+	company.id = lastIndex + 1;
+	company.qr_code_url = generateQRCode(company.id);
 	companies.push(company);
 	console.log(`postCompany: ${company}`);
 	res.status(200).send(company);
@@ -45,6 +50,11 @@ export const updateStudent = (req, res) => {
 	const student = students.filter(({ id }) => id === parseInt(studentID, 10));
 	if (student.length < 1 || !quality) {
 		res.status(404).send();
+		return;
+	}
+
+	if (quality !== 'good' && quality !== 'bad') {
+		res.status(422).send();
 		return;
 	}
 	student[0].quality = quality;

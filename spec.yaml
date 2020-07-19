@@ -73,7 +73,7 @@ paths:
             - company
           properties:
             company:
-              $ref: "#/definitions/Company"
+              $ref: "#/definitions/CreateCompanyObject"
       responses:
         "200":
           description: "Success"
@@ -280,6 +280,19 @@ definitions:
       name: "name"
       description: "description"
       id: 0
+  CreateCompanyObject:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Deloitte"
+      events_id:
+        type: "integer"
+        format: "int64"
+        example: 1
+    example:
+      name: "Deloitte"
+      events_id: 1
   Company:
     type: "object"
     properties:
