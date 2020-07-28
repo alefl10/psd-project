@@ -2,7 +2,7 @@ import { events, companies, students } from '../models/data.json';
 
 const qualityValues = ['good', 'bad'];
 
-const generateQRCode = companyID => `www.us.com/companies/${companyID}/qrcode`;
+const generateQRCode = companyName => `www.icareerday.com/companies/${companyName}/qrcode`;
 
 export const postEvent = (req, res) => {
 	const { event } = req.body;
@@ -10,6 +10,8 @@ export const postEvent = (req, res) => {
 		res.status(422).send();
 		return;
 	}
+	const lastIndex = events[events.length - 1].id;
+	event.id = lastIndex + 1;
 	events.push(event);
 	console.log(`postEvent: ${event}`);
 	res.status(200).send(event);
@@ -23,7 +25,7 @@ export const postCompany = (req, res) => {
 	}
 	const lastIndex = companies[companies.length - 1].id;
 	company.id = lastIndex + 1;
-	company.qr_code_url = generateQRCode(company.id);
+	company.qr_code_url = generateQRCode(company.name);
 	companies.push(company);
 	console.log(`postCompany: ${company}`);
 	res.status(200).send(company);
